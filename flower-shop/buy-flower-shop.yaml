@@ -1,0 +1,306 @@
+openapi: 3.0.0
+info:
+  title: Flower Shop -- Buy
+  description: "This is a sample Flower Shop server.  \nThis includes the Buy REST\
+    \ APIs.\nYou can find\nout more about Swagger at\n[http://swagger.io](http://swagger.io)\
+    \ or on\n[irc.freenode.net, #swagger](http://swagger.io/irc/).\n"
+  termsOfService: http://swagger.io/terms/
+  contact:
+    email: rosemary.charnley@smartbear.com
+  license:
+    name: Apache 2.0
+    url: http://www.apache.org/licenses/LICENSE-2.0.html
+  version: 2.0.0
+  x-project: Name
+servers:
+- url: https://virtserver.swaggerhub.com/Charnley-Test/Buy-Flower-Shop/2.0.0
+  description: SwaggerHub API Auto Mocking
+- url: https://development.flowershop.io/v1
+  description: Development Server
+- url: https://staging.flowershop.io/v1
+  description: Staging Server
+- url: https://api.flowershop.io/v1
+  description: Production Server
+tags:
+- name: Shop
+  description: Rest APIs for Shop
+- name: Shopping Cart
+  description: Rest APIs for Shopping Cart
+- name: Check Out
+  description: Rest APIs for Check Out
+paths:
+  /shop:
+    get:
+      tags:
+      - Shop
+      summary: Get all flowers to shop.
+      responses:
+        "200":
+          description: List of all flowers.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Flower'
+    post:
+      tags:
+      - Shop
+      summary: Add a flower to shop
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Flower'
+        required: true
+      responses:
+        "200":
+          description: Flower item successfully added.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Flower'
+  /{user_id}/shoppingcart/{session_id}:
+    get:
+      tags:
+      - Shopping Cart
+      summary: Get shopping cart session.
+      operationId: ""
+      parameters:
+      - name: user_id
+        in: path
+        description: User ID to load shopping cart.
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+      - name: session_id
+        in: path
+        description: Session ID to load shopping cart.
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+      responses:
+        "200":
+          description: List of all flowers.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/ShoppingCart'
+    post:
+      tags:
+      - Shopping Cart
+      summary: Add item to shopping cart session.
+      parameters:
+      - name: user_id
+        in: path
+        description: User ID to load shopping cart.
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+      - name: session_id
+        in: path
+        description: Session ID to load shopping cart.
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ShoppingCart'
+        required: true
+      responses:
+        "200":
+          description: List of all flowers.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/ShoppingCart'
+    delete:
+      tags:
+      - Shopping Cart
+      summary: Add item to shopping cart session.
+      parameters:
+      - name: user_id
+        in: path
+        description: User ID to load shopping cart.
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+      - name: session_id
+        in: path
+        description: Session ID to load shopping cart.
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+      responses:
+        "200":
+          description: List of all flowers.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/ShoppingCart'
+  /{user_id}/checkout/{session_id}:
+    get:
+      tags:
+      - Check Out
+      summary: Get checkout session.
+      parameters:
+      - name: user_id
+        in: path
+        description: User ID to load shopping cart.
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+      - name: session_id
+        in: path
+        description: Session ID to load shopping cart.
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+      responses:
+        "200":
+          description: List of all flowers.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Flower'
+    post:
+      tags:
+      - Check Out
+      summary: Add item to check out session.
+      parameters:
+      - name: user_id
+        in: path
+        description: User ID to load shopping cart.
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+      - name: session_id
+        in: path
+        description: Session ID to load shopping cart.
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Flower'
+        required: true
+      responses:
+        "200":
+          description: List of all flowers.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Flower'
+    delete:
+      tags:
+      - Check Out
+      summary: Add item to check out session.
+      parameters:
+      - name: user_id
+        in: path
+        description: User ID to load shopping cart.
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+      - name: session_id
+        in: path
+        description: Session ID to load shopping cart.
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+      responses:
+        "200":
+          description: List of all flowers.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Flower'
+components:
+  schemas:
+    Flower:
+      type: object
+      properties:
+        id:
+          type: integer
+          example: 2
+        name:
+          type: string
+          example: Sun Flower
+        primary-color:
+          type: string
+          example: Red
+        secondary-color:
+          type: string
+          example: brown
+        Desciption:
+          type: string
+          example: Tall weed flower
+        price:
+          type: number
+          example: 3.99
+        category:
+          type: string
+          example: weed
+    ShoppingCart:
+      type: object
+      properties:
+        id:
+          type: integer
+          example: 4
+        cart_items:
+          type: array
+          items:
+            $ref: '#/components/schemas/Flower'
+        discount_code:
+          type: string
+          example: SALE20
+        sub_total:
+          type: number
+          example: 10.87
+        tax:
+          type: number
+          example: 2
+        total:
+          type: number
+          example: 12.87
+x-azure-api-id: sh-f82e3994-a35e-4539-b396-d5747df76672
