@@ -1,0 +1,306 @@
+openapi: 3.0.0
+info:
+  title: Flower Shop -- Billing
+  description: "This is a sample Flower Shop server.  \nThis includes the Billing\
+    \ REST APIs.\nYou can find\nout more about Swagger at\n[http://swagger.io](http://swagger.io)\
+    \ or on\n[irc.freenode.net, #swagger](http://swagger.io/irc/).\n"
+  termsOfService: http://swagger.io/terms/
+  contact:
+    email: rosemary.charnley@smartbear.com
+  license:
+    name: Apache 2.0
+    url: http://www.apache.org/licenses/LICENSE-2.0.html
+  version: 2.0.0
+  x-project: This is the current project ya!
+servers:
+- url: https://virtserver.swaggerhub.com/Charnley-Test/Billing-Flower-Shop/2.0.0
+  description: SwaggerHub API Auto Mocking
+- url: https://virtserver.swaggerhub.com/Charnley-Test/User-Flower-Shop/1.0.0
+  description: SwaggerHub API Auto Mocking
+- url: https://development.flowershop.io/v1
+  description: Development Server
+- url: https://staging.flowershop.io/v1
+  description: Staging Server
+- url: https://api.flowershop.io/v1
+  description: Production Server
+tags:
+- name: Bill
+  description: Everything about your Pets
+  externalDocs:
+    description: Find out more
+    url: http://swagger.io
+- name: Receipt
+  description: Access to Petstore orders
+- name: Process
+  description: Operations about user
+  externalDocs:
+    description: Find out more about our store
+    url: http://swagger.io
+- name: Credit
+  description: Operations about user
+  externalDocs:
+    description: Find out more about our store
+    url: http://swagger.io
+- name: Checks
+  description: Operations about user
+  externalDocs:
+    description: Find out more about our store
+    url: http://swagger.io
+- name: Cash
+  description: Operations about user
+  externalDocs:
+    description: Find out more about our store
+    url: http://swagger.io
+paths:
+  /bill:
+    post:
+      tags:
+      - Bill
+      summary: Submit a bill.
+      operationId: bill_post
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Bill'
+        required: true
+      responses:
+        "200":
+          description: Bill submitted.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Bill'
+      x-openapi-router-controller: swagger_server.controllers.bill_controller
+  /bill/{id}:
+    get:
+      tags:
+      - Bill
+      summary: Get a bill.
+      operationId: bill_id_get
+      parameters:
+      - name: id
+        in: path
+        description: Bill id.
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+      responses:
+        "200":
+          description: Get a bill.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Bill'
+      x-openapi-router-controller: swagger_server.controllers.bill_controller
+  /receipt:
+    post:
+      tags:
+      - Receipt
+      summary: Create a receipt.
+      operationId: receipt_post
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Receipt'
+        required: true
+      responses:
+        "200":
+          description: Receipt created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Receipt'
+      x-openapi-router-controller: swagger_server.controllers.receipt_controller
+  /receipt/{id}:
+    get:
+      tags:
+      - Receipt
+      summary: Get a receipt.
+      operationId: receipt_id_get
+      parameters:
+      - name: id
+        in: path
+        description: Receipt id.
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+      responses:
+        "200":
+          description: Get a receipt.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Receipt'
+      x-openapi-router-controller: swagger_server.controllers.receipt_controller
+  /process:
+    post:
+      tags:
+      - Process
+      summary: Process a bill.
+      operationId: process_post
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Bill'
+        required: true
+      responses:
+        "200":
+          description: Bill processed.
+      x-openapi-router-controller: swagger_server.controllers.process_controller
+components:
+  schemas:
+    Address:
+      type: object
+      properties:
+        address_1:
+          type: string
+        address_2:
+          type: string
+        zipcode:
+          type: integer
+        country:
+          type: string
+      example:
+        zipcode: 0
+        country: country
+        address_1: address_1
+        address_2: address_2
+    Person:
+      required:
+      - email
+      - firstname
+      - id
+      - last name
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+          example: d290f1ee-6c54-4b01-90e6-d701748f0851
+        firstname:
+          type: string
+          example: John
+        lastname:
+          type: string
+          example: Doe
+        email:
+          type: string
+          example: customer@smartbear.com
+        phonenumber:
+          type: string
+          example: 123-456-7890
+        address:
+          type: string
+          example: 123 Coffee Street
+      example:
+        firstname: John
+        address: 123 Coffee Street
+        phonenumber: 123-456-7890
+        id: d290f1ee-6c54-4b01-90e6-d701748f0851
+        email: customer@smartbear.com
+        lastname: Doe
+    Bill:
+      required:
+      - id
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+          example: d290f1ee-6c54-4b01-90e6-d701748f0851
+        person:
+          $ref: '#/components/schemas/Person'
+        billingAddress:
+          $ref: '#/components/schemas/Address'
+        discountCode:
+          type: string
+        paymentType:
+          type: string
+        discount:
+          type: number
+        subtotal:
+          type: number
+        tax:
+          type: number
+        total:
+          type: number
+      example:
+        total: 5.637376656633329
+        discountCode: discountCode
+        person:
+          firstname: John
+          address: 123 Coffee Street
+          phonenumber: 123-456-7890
+          id: d290f1ee-6c54-4b01-90e6-d701748f0851
+          email: customer@smartbear.com
+          lastname: Doe
+        subtotal: 1.4658129805029452
+        discount: 6.027456183070403
+        tax: 5.962133916683182
+        id: d290f1ee-6c54-4b01-90e6-d701748f0851
+        billingAddress:
+          zipcode: 0
+          country: country
+          address_1: address_1
+          address_2: address_2
+        paymentType: paymentType
+    Receipt:
+      required:
+      - id
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+          example: d290f1ee-6c54-4b01-90e6-d701748f0851
+        person:
+          $ref: '#/components/schemas/Person'
+        billingAddress:
+          $ref: '#/components/schemas/Address'
+        purchases:
+          type: array
+          items:
+            type: object
+        paymentType:
+          type: string
+        discountCode:
+          type: string
+        discount:
+          type: number
+        subtotal:
+          type: number
+        tax:
+          type: number
+        total:
+          type: number
+      example:
+        total: 5.962133916683182
+        discountCode: discountCode
+        purchases:
+        - {}
+        - {}
+        person:
+          firstname: John
+          address: 123 Coffee Street
+          phonenumber: 123-456-7890
+          id: d290f1ee-6c54-4b01-90e6-d701748f0851
+          email: customer@smartbear.com
+          lastname: Doe
+        subtotal: 6.027456183070403
+        discount: 0.8008281904610115
+        tax: 1.4658129805029452
+        id: d290f1ee-6c54-4b01-90e6-d701748f0851
+        billingAddress:
+          zipcode: 0
+          country: country
+          address_1: address_1
+          address_2: address_2
+        paymentType: paymentType
+
