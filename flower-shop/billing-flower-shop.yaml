@@ -1,0 +1,240 @@
+openapi: 3.0.0
+info:
+  title: Flower Shop -- Billing
+  description: "This is a sample Flower Shop server.  \nThis includes the Billing\
+    \ REST APIs.\nYou can find\nout more about Swagger at\n[http://swagger.io](http://swagger.io)\
+    \ or on\n[irc.freenode.net, #swagger](http://swagger.io/irc/).\n"
+  termsOfService: http://swagger.io/terms/
+  contact:
+    email: rosemary.charnley@smartbear.com
+  license:
+    name: Apache 2.0
+    url: http://www.apache.org/licenses/LICENSE-2.0.html
+  version: 2.0.0
+  x-project: This is the current project ya!
+servers:
+- url: https://virtserver.swaggerhub.com/Charnley-Test/Billing-Flower-Shop/2.0.0
+  description: SwaggerHub API Auto Mocking
+- url: https://virtserver.swaggerhub.com/Charnley-Test/User-Flower-Shop/1.0.0
+  description: SwaggerHub API Auto Mocking
+- url: https://development.flowershop.io/v1
+  description: Development Server
+- url: https://staging.flowershop.io/v1
+  description: Staging Server
+- url: https://api.flowershop.io/v1
+  description: Production Server
+tags:
+- name: Bill
+  description: Everything about your Pets
+  externalDocs:
+    description: Find out more
+    url: http://swagger.io
+- name: Receipt
+  description: Access to Petstore orders
+- name: Process
+  description: Operations about user
+  externalDocs:
+    description: Find out more about our store
+    url: http://swagger.io
+- name: Credit
+  description: Operations about user
+  externalDocs:
+    description: Find out more about our store
+    url: http://swagger.io
+- name: Checks
+  description: Operations about user
+  externalDocs:
+    description: Find out more about our store
+    url: http://swagger.io
+- name: Cash
+  description: Operations about user
+  externalDocs:
+    description: Find out more about our store
+    url: http://swagger.io
+paths:
+  /bill:
+    post:
+      tags:
+      - Bill
+      summary: Submit a bill.
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Bill'
+        required: true
+      responses:
+        "200":
+          description: Bill submitted.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Bill'
+  /bill/{id}:
+    get:
+      tags:
+      - Bill
+      summary: Get a bill.
+      parameters:
+      - name: id
+        in: path
+        description: Bill id.
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+      responses:
+        "200":
+          description: Get a bill.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Bill'
+  /receipt:
+    post:
+      tags:
+      - Receipt
+      summary: Create a receipt.
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Receipt'
+        required: true
+      responses:
+        "200":
+          description: Receipt created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Receipt'
+  /receipt/{id}:
+    get:
+      tags:
+      - Receipt
+      summary: Get a receipt.
+      parameters:
+      - name: id
+        in: path
+        description: Receipt id.
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+      responses:
+        "200":
+          description: Get a receipt.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Receipt'
+  /process:
+    post:
+      tags:
+      - Process
+      summary: Process a bill.
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Bill'
+        required: true
+      responses:
+        "200":
+          description: Bill processed.
+components:
+  schemas:
+    Address:
+      type: object
+      properties:
+        address_1:
+          type: string
+        address_2:
+          type: string
+        zipcode:
+          type: integer
+        country:
+          type: string
+    Person:
+      required:
+      - email
+      - firstname
+      - id
+      - last name
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+          example: d290f1ee-6c54-4b01-90e6-d701748f0851
+        firstname:
+          type: string
+          example: John
+        lastname:
+          type: string
+          example: Doe
+        email:
+          type: string
+          example: customer@smartbear.com
+        phonenumber:
+          type: string
+          example: 123-456-7890
+        address:
+          type: string
+          example: 123 Coffee Street
+    Bill:
+      required:
+      - id
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+          example: d290f1ee-6c54-4b01-90e6-d701748f0851
+        person:
+          $ref: '#/components/schemas/Person'
+        billingAddress:
+          $ref: '#/components/schemas/Address'
+        discountCode:
+          type: string
+        paymentType:
+          type: string
+        discount:
+          type: number
+        subtotal:
+          type: number
+        tax:
+          type: number
+        total:
+          type: number
+    Receipt:
+      required:
+      - id
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+          example: d290f1ee-6c54-4b01-90e6-d701748f0851
+        person:
+          $ref: '#/components/schemas/Person'
+        billingAddress:
+          $ref: '#/components/schemas/Address'
+        purchases:
+          type: array
+          items:
+            type: object
+        paymentType:
+          type: string
+        discountCode:
+          type: string
+        discount:
+          type: number
+        subtotal:
+          type: number
+        tax:
+          type: number
+        total:
+          type: number
