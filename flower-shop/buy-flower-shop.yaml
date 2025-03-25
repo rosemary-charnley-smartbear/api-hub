@@ -10,6 +10,7 @@ info:
   license:
     name: Apache 2.0
   version: 2.0.0
+  x-project: Project Name
 servers:
 - url: https://virtserver.swaggerhub.com/Charnley-Test/Buy-Flower-Shop/2.0.0
   description: SwaggerHub API Auto Mocking
